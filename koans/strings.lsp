@@ -14,24 +14,24 @@
 
 (define-test test-double-quoted-strings-are-strings
     (let ((my-string "do or do not"))
-      (true-or-false? ___ (typep my-string 'string))
+      (true-or-false? t (typep my-string 'string))
       "strings are the same thing as vectors of characters"
-      (true-or-false? ___ (typep my-string 'array))
+      (true-or-false? t (typep my-string 'array))
       (assert-equal (aref "meat" 2) (aref "fiesta" 5))
       "strings are not integers :p"
-      (true-or-false? ___ (typep my-string 'integer))))
+      (true-or-false? nil (typep my-string 'integer))))
 
 
 (define-test test-multi-line-strings-are-strings
     (let ((my-string "this is
                       a multi
                       line string"))
-      (true-or-false? ___ (typep my-string 'string))))
+      (true-or-false? t (typep my-string 'string))))
 
 
 (define-test test-escape-quotes
     (let ((my-string "this string has one of these \" in it"))
-      (true-or-false? ___ (typep my-string 'string))))
+      (true-or-false? t (typep my-string 'string))))
 
 
 ; This test from common lisp cookbook
@@ -39,14 +39,14 @@
     "since strings are sequences, you may use subseq"
   (let ((my-string "Groucho Marx"))
     (assert-equal "Marx" (subseq my-string 8))
-    (assert-equal (subseq my-string 0 7) ____)
-    (assert-equal (subseq my-string 1 5) ____)))
+    (assert-equal (subseq my-string 0 7) "Groucho")
+    (assert-equal (subseq my-string 1 5) "rouc")))
 
 (define-test test-accessing-individual-characters
   "char literals look like this"
-  (true-or-false? ___ (typep #\a 'character))
-  (true-or-false? ___ (typep "A" 'character))
-  (true-or-false? ___ (typep #\a 'string))
+  (true-or-false? t (typep #\a 'character))
+  (true-or-false? t (typep "A" 'character))
+  (true-or-false? t (typep #\a 'string))
   "char is used to access individual characters"
   (let ((my-string "Cookie Monster"))
     (assert-equal (char my-string 0) #\C)
