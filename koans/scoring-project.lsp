@@ -50,8 +50,20 @@
 ; Your goal is to write the score method.
 
 (defun score (dice)
-  ; You need to write this method
-)
+  (if (equal dice nil) 0
+    (let ((score-table (make-hash-table :test #'equal)) (total 0))
+      (dolist (i dice)
+        (if (equal nil (gethash i score-table))
+          (setf (gethash i score-table) 1)
+          (incf (gethash i score-table))))
+      (maphash
+        (lambda (k v)
+          (cond
+            ((equal k 1) (incf total (+ (* (truncate (/ v 3)) 1000) (* 100 (mod v 3)))))
+            ((equal k 5) (incf total (+ (* (truncate (/ v 3)) 500) (* 50 (mod v 3)))))
+            (t (incf total (* (truncate (/ v 3)) k 100)))))
+        score-table)
+      total)))
 
 (define-test test-score-of-an-empty-list-is-zero
     (assert-equal 0 (score nil)))
