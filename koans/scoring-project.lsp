@@ -51,9 +51,22 @@
 
 (defun score (dice)
   ; You need to write this method
-)
+  (case dice (nil 0)
+    (t (let ((score-table (make-hash-table :test #'equal)) (total 0))
+          (dolist (i dice) 
+            (if (equal nil (gethash i score-table))
+              (setf (gethash i score-table) 1)
+              (incf (gethash i score-table))))
+          (loop for k being the hash-keys in score-table using (hash-value v)
+            do (let ((times (truncate (/ v 3))) (remain (mod v 3))) 
+                (cond 
+                  ((= k 1) (incf total (+ (* times 1000) (* 100 remain))))
+                  ((= k 5) (incf total (+ (* times 500) (* 50 remain))))
+                  (t (incf total (* times k 100))))))
+          total))))
 
 (define-test test-score-of-an-empty-list-is-zero
+    (format t "~S" (score nil))
     (assert-equal 0 (score nil)))
 
 (define-test test-score-of-a-single-roll-of-5-is-50
