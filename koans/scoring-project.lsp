@@ -66,7 +66,6 @@
           total))))
 
 (define-test test-score-of-an-empty-list-is-zero
-    (format t "~S" (score nil))
     (assert-equal 0 (score nil)))
 
 (define-test test-score-of-a-single-roll-of-5-is-50
